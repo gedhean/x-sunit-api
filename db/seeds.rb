@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 10.times do 
-	User.create({
+	Survivor.create({
 		name: Faker::Name.name,
 		age: Faker::Number.between(2, 100),
 		gender: Faker::Gender.binary_type,
