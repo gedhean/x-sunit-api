@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_21_113556) do
+ActiveRecord::Schema.define(version: 2018_10_21_124639) do
 
   create_table "reports", primary_key: ["reporter_id", "abducted_id"], force: :cascade do |t|
     t.integer "reporter_id"
