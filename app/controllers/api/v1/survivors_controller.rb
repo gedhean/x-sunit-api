@@ -21,7 +21,7 @@ class Api::V1::SurvivorsController < ApplicationController
 		@survivor = Survivor.new(survivor_params)
 
 		if @survivor.save
-			render json: { success: true, message: 'Survivor created', result: @survivor }, status: :ok
+			render json: { success: true, message: 'Survivor created', result: @survivor }, status: :created
 		else
 			render json: { success: false, message: @survivor.errors, result: @survivor }, status: :unprocessable_entity
 		end	
@@ -37,7 +37,7 @@ class Api::V1::SurvivorsController < ApplicationController
 	# Update a survivor
 	def update
 		if @survivor.update_attributes(survivor_params)
-			render json: { success: true, message: 'Survivor updated', result: @survivor }, status: :ok
+			render json: { success: true, message: 'Survivor updated', result: @survivor }, status: :accepted
 		else
 			render json: { success: false, message: @survivor.errors, result: @survivor }, status: :unprocessable_entity
 		end
