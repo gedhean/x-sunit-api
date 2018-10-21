@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_21_124639) do
+ActiveRecord::Schema.define(version: 2018_10_21_121823) do
 
-  create_table "reports", primary_key: ["reporter_id", "abducted_id"], force: :cascade do |t|
+  create_table "reports", force: :cascade do |t|
     t.integer "reporter_id"
-    t.text "message"
     t.integer "abducted_id"
+    t.text "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
