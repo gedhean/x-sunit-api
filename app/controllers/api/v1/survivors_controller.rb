@@ -23,23 +23,23 @@ class Api::V1::SurvivorsController < ApplicationController
 		if @survivor.save
 			render json: { success: true, message: 'Survivor created', result: @survivor }, status: :ok
 		else
-			render json: { success: false, message: 'Failed to create survivor', result: @survivor }, status: :unprocessable_entity
+			render json: { success: false, message: @survivor.errors, result: @survivor }, status: :unprocessable_entity
 		end	
 	end
 
-	# Delete an survivor
+	# Delete a survivor
 	def destroy
 		@survivor.destroy
 		render json: { success: true, message: 'Survivor deleted', result: @survivor }, status: :ok
 
 	end
 
-	# Update an survivor
+	# Update a survivor
 	def update
 		if @survivor.update_attributes(survivor_params)
 			render json: { success: true, message: 'Survivor updated', result: @survivor }, status: :ok
 		else
-			render json: { success: false, message: 'Failed to update survivor', result: @survivor }, status: :unprocessable_entity
+			render json: { success: false, message: @survivor.errors, result: @survivor }, status: :unprocessable_entity
 		end
 
 	end
