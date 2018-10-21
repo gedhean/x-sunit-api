@@ -15,3 +15,11 @@
 		longitude: Faker::Number.decimal(5)
 	})	
 end
+
+10.times do
+	Report.create({
+		reporter_id: Faker::Number.between(1, 20),
+		message: Faker::Lorem.sentence,
+		abducted_id: Faker::Number.between(1, 10)
+	})
+end
