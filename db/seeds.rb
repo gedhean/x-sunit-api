@@ -6,7 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-20.times do 
+Survivor.delete_all
+Report.delete_all
+
+30.times do 
 	Survivor.create({
 		name: Faker::Name.name,
 		age: Faker::Number.between(2, 100),
@@ -16,9 +19,9 @@
 	})	
 end
 
-10.times do
+40.times do
 	Report.create({
-		reporter_id: Faker::Number.between(1, 20),
+		reporter_id: Faker::Number.between(1, 30),
 		message: Faker::Lorem.sentence,
 		abducted_id: Faker::Number.between(1, 10)
 	})
