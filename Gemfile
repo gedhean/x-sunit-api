@@ -30,7 +30,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 # Use for pagination
 gem 'will_paginate'
-gem 'pager_api'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
