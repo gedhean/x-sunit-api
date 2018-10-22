@@ -1,7 +1,5 @@
 class Api::V1::SurvivorsController < ApplicationController
 	before_action :set_survivor, only: [:show, :update, :destroy]
-	rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
-	rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
 	# List all Survivors
 	# GET /survivors
@@ -12,20 +10,19 @@ class Api::V1::SurvivorsController < ApplicationController
 		total_pages = (total_results.to_f/per_page).ceil 
 
 		@survivors = Survivor.paginate(:page => page, :per_page => per_page).order('name ASC');
-		#@survivors = Survivor.order('name ASC').offset(per_page * (page-1)).limit(per_page);
-		render json: { 
+		json_response({ 
 			success: true, 
 			page: page, 
 			per_page: per_page, 
 			total_pages: total_pages, 
 			total_results: total_results, 
-			results: @survivors }, status: :ok
+			results: @survivors }, :ok)
 	end
 
 	# List survivor by id
 	# GET /survivors/:id
 	def show
-		render_json_response('Survivor found')
+		json_response({ success: true, message: 'Survivor found', result: @survivor }, :ok)
 	end
 
 	# Create a new survivor
@@ -33,21 +30,21 @@ class Api::V1::SurvivorsController < ApplicationController
 	def create
 		@survivor = Survivor.new(survivor_params)
 		@survivor.save!
-		render_json_response('Survivor created', :created)
+		json_response({ success: true, message: 'Survivor created', result: @survivor }, :created)
 	end
 
 	# Delete a survivor by id
 	# DELETE /survivors/:id
 	def destroy
 		@survivor.destroy
-		render_json_response('Survivor deleted', :accepted)
+		json_response({ success: true, message: 'Survivor deleted', result: @survivor }, :accepted)
 	end
 
 	# Update a survivor by id
 	# PUT /survivors/:id
 	def update
 		@survivor.update!(survivor_params)
-		render_json_response('Survivor updated', :accepted)
+		json_response({ success: true, message: 'Survivor updated', result: @survivor }, :accepted)
 	end
 
 	private
@@ -58,17 +55,5 @@ class Api::V1::SurvivorsController < ApplicationController
 	# Find survivor by id and set in @survivor 
 	def set_survivor
 		@survivor = Survivor.find(params[:id])
-	end
-	# Render JSON for success responses
-	def render_json_response(message, status = :ok)
-		render json: { success: true, message: message, result: @survivor }, status: status
-	end
-	# Handle Validation Failure
-	def render_unprocessable_entity_response(exception)
-		render json: { success: false, errors: exception.record.errors }, status: :unprocessable_entity
-	end
-	# Handle Not Found survivor 
-	def render_not_found_response(exception)
-		render json: { success: false, errors: exception.message }, status: :not_found
 	end
 end
