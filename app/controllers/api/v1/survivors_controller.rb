@@ -6,8 +6,17 @@ class Api::V1::SurvivorsController < ApplicationController
 	# List all Survivors
 	# GET /survivors
 	def index
-		@survivors = Survivor.order('name ASC');
-		render json: { success: true, results: @survivors }, status: :ok
+		per_page_param = params[:per_page].to_i.abs 
+		page_param = params[:page].to_i.abs 
+		per_page = per_page_param.zero? ? 10 : per_page_param 
+		page =  page_param.zero? ? 1 : page_param 
+		total_results = Survivor.count
+		total_pages = (total_results.to_f / per_page).ceil 
+
+		@survivors = Survivor.order('name ASC').offset(per_page * (page-1)).limit(per_page);
+		render json: { success: true, page: page, per_page: per_page, total_pages: total_pages, total_results: total_results , results: @survivors }, status: :ok
+		#per_page = params[:per_page]
+		#paginate Survivor.order('name ASC'), per_page: 5
 	end
 
 	# List survivor by id
