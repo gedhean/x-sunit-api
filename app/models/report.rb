@@ -1,12 +1,13 @@
 class Report < ApplicationRecord
 	validates :reporter_id, :abducted_id, presence: true
-
-	after_save :update_falg_abducted_in_survivors
+	validates :reporter_id, :abducted_id, numericality: { only_integer: true }
+	after_save :update_flag_abducted_in_survivors
 
 	private
-	def update_falg_abducted_in_survivors
+	# Flag the survivor as abducted if there is at least three reports
+	def update_flag_abducted_in_survivors
 		num_reports =  Report.where(abducted_id: abducted_id).count
-		unless num_reports < 3
+		if num_reports >= 3
 			Survivor.update(abducted_id, abducted: true)
 		end 
 	end
