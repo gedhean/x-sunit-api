@@ -1,8 +1,20 @@
 class Api::V1::ReportsController < ApplicationController
 	# GET api/v1/reports
 	def index
-		@reports = Report.all
-		render json: { results: @reports }, status: :ok		
+		per_page = 20
+		page = params[:page] || 1
+		total_results = Report.count
+		total_pages = (total_results.to_f/per_page).ceil
+
+		@reports = Report.paginate(:page => page, :per_page => per_page).order('created_at ASC')
+		render json: { 
+				success: true,
+				page: page,
+				per_page: per_page,
+				total_pages: total_pages,
+				total_results: total_results,
+				results: @reports
+			}, status: :ok		
 	end	
 	# POST api/v1/reports
 	def create
