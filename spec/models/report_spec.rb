@@ -6,7 +6,7 @@ RSpec.describe Report, type: :model do
 	it { should validate_presence_of(:message) }
 	it { should validate_presence_of(:abducted_id) }
 
-	describe 'lifecycle callback after_save' do
+	describe 'lifecycle callback before_save' do
 		let(:report) { build(:report) }
 
 		it 'trigger update_flag_abducted_in_survivors' do
@@ -16,7 +16,7 @@ RSpec.describe Report, type: :model do
 	end
 
 	describe 'update_flag_abducted_in_survivors' do
-		let(:survivors) { create_list(:survivor, 10) }
+		let!(:survivors) { create_list(:survivor, 10) }
 		let(:survivor_id) { survivors.first.id }
 
 		context 'when there less then three or more reports' do
@@ -40,6 +40,12 @@ RSpec.describe Report, type: :model do
 
 				expect(@num_reports).to be >= 3
 				expect(@survivor.abducted).to eq(true)
+			end
+		end
+
+		context 'when abducted_id does not exist in Survivors' do
+			it 'raise a NotFound error' do
+			 	expect { create(:report, abducted_id: 666) }.to raise_error(ActiveRecord::RecordNotFound)
 			end
 		end
 	end
