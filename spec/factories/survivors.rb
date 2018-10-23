@@ -5,6 +5,6 @@ FactoryBot.define do
 		gender { Faker::Gender.binary_type }
 		latitude { Faker::Number.decimal(5) }
 		longitude { Faker::Number.decimal(5) }
-		abducted { Faker::Boolean.boolean(0.8) }
+		abducted { false }
 	end
 end
