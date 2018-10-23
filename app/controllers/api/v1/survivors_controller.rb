@@ -5,7 +5,7 @@ class Api::V1::SurvivorsController < ApplicationController
 	# GET /survivors
 	def index
 		per_page = 10
-		page = params[:page]
+		page = params[:page] || 1
 		total_results = Survivor.count
 		total_pages = (total_results.to_f/per_page).ceil 
 
