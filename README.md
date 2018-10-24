@@ -36,4 +36,4 @@ $ bundle exec rspec --format documentation
 - Add more tests, tests, tests...
 - Thoughts about scalability
 - Models design (need to think about future features)
-- Third party feedback
+- Third party feedback :smile:
