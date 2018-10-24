@@ -5,3 +5,24 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Survivor.delete_all
+Report.delete_all
+
+30.times do 
+	Survivor.create({
+		name: Faker::Name.name,
+		age: Faker::Number.between(2, 100),
+		gender: Faker::Gender.binary_type,
+		latitude: Faker::Number.decimal(5),
+		longitude: Faker::Number.decimal(5)
+	})	
+end
+
+40.times do
+	Report.create({
+		reporter_id: Faker::Number.between(1, 30),
+		message: Faker::Lorem.sentence,
+		abducted_id: Faker::Number.between(1, 10)
+	})
+end
