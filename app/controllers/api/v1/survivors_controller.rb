@@ -1,12 +1,30 @@
 class Api::V1::SurvivorsController < ApplicationController
-	before_action :set_survivor, only: [:show, :update, :destroy]
+	before_action :set_survivor, 		only: [:show, :update, :destroy]
+	before_action :set_total_survivors,	only: [:stats, :index]
+
+	# Get survivors statistics
+	# GET /survivors-stats
+	def stats
+		if @total_survivors == 0
+			json_response({ message: "There no survirvors :'(" }, :not_found) 
+		else 
+			abducted = Survivor.where(abducted: true).count
+			non_abducted = @total_survivors - abducted
+			abducted_rate = (abducted.to_f/@total_survivors).truncate(4) * 100
+			json_response({ 
+				success: true, 
+				abducted: abducted_rate, 
+				non_abducted: 100 - abducted_rate 
+			}, :ok )
+		end	
+	end
 
 	# List all Survivors
 	# GET /survivors
 	def index
 		per_page = 10
 		page = params[:page] || 1
-		total_results = Survivor.count
+		total_results = @total_survivors
 		total_pages = (total_results.to_f/per_page).ceil 
 
 		@survivors = Survivor.paginate(:page => page, :per_page => per_page).order('name ASC');
@@ -55,5 +73,9 @@ class Api::V1::SurvivorsController < ApplicationController
 	# Find survivor by id and set in @survivor 
 	def set_survivor
 		@survivor = Survivor.find(params[:id])
+	end
+	# Get total number of survivors
+	def set_total_survivors
+		@total_survivors = Survivor.count
 	end
 end
