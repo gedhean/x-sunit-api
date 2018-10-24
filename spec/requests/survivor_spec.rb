@@ -134,4 +134,31 @@ RSpec.describe "Survivors API", type: :request do
 			end
 		end
 	end
+
+	# Tests for GET /survivors/stats
+	describe 'GET /survivors/stats' do
+		context 'when theres survivors' do
+			before { get '/api/v1/survivors/stats' }
+			it 'returns JSON response with abducted and non_abducted rating' do
+				expect(json).not_to be_empty
+				expect(json).to have_key("abducted")
+				expect(json).to have_key("non_abducted")
+			end
+			it 'returns status code 200 OK' do
+				expect(response).to have_http_status(200)
+			end
+		end
+		context 'when there are no survivors' do
+			before { Survivor.delete_all }
+			# Get statistics again after delete all survivors to ensure there aren't no one
+			before { get '/api/v1/survivors/stats' }
+			it 'responde with message to alert there aren\'t survivors' do
+				expect(json).to have_key('message')
+				expect(json['message']).to eq("There no survirvors :'(")
+			end
+			it 'responde with status code 404 NotFound' do
+				expect(response).to have_http_status(404)
+			end
+		end
+	end
 end
