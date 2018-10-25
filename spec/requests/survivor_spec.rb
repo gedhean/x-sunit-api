@@ -12,7 +12,8 @@ RSpec.describe "Survivors API", type: :request do
 
 		it "returns survivors in JSON format" do
 			expect(json).not_to be_empty
-			#expect(json.size).to eq(6)
+			expect(json).to have_key("results")
+			expect(json["results"]).not_to be_empty
 		end
 
 		it "returns status code 200 OK" do
