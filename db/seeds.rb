@@ -20,10 +20,10 @@ Survivor.delete_all
 end
 
 40.times do
-	sv_id = Survivor.select(:id).sample
+	sv_id = Survivor.select(:id)
 	Report.create({
-		reporter_id: sv_id.id,
+		reporter_id: sv_id.sample.id,
 		message: Faker::Lorem.sentence,
-		abducted_id: sv_id.id,
+		abducted_id: sv_id.sample.id,
 	})
 end
