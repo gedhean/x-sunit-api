@@ -31,13 +31,14 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Use for pagination
 gem 'will_paginate'
 
+# To create fake data
+gem 'faker'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Test stuff
   gem 'rspec-rails', '~> 3.5'
-  # To create fake data
-  gem 'faker'
 end
 
 group :development do
