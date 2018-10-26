@@ -6,8 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Survivor.delete_all
 Report.delete_all
+Survivor.delete_all
 
 100.times do 
 	Survivor.create({
