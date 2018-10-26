@@ -34,6 +34,6 @@ ActiveRecord::Schema.define(version: 2018_10_21_121823) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "reports", "survivors", column: "abducted_id"
-  add_foreign_key "reports", "survivors", column: "reporter_id"
+  add_foreign_key "reports", "survivors", column: "abducted_id", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "reports", "survivors", column: "reporter_id", on_update: :cascade, on_delete: :cascade
 end
