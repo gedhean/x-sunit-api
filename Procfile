@@ -1,3 +1,2 @@
-web: rake db:create
-web: rake db:migrate
-web: rake db:seed
+web: rake db:reset
+web: rake db:setup
