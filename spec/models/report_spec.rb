@@ -6,8 +6,11 @@ RSpec.describe Report, type: :model do
 	it { should validate_presence_of(:message) }
 	it { should validate_presence_of(:abducted_id) }
 
+	let!(:survivors) { create_list(:survivor, 10) }
+	let(:survivor_id) { survivors.first.id }
+
 	describe 'lifecycle callback before_save' do
-		let(:report) { build(:report) }
+		let(:report) { build(:report, abducted_id: survivor_id, reporter_id: survivor_id) }
 
 		it 'trigger update_flag_abducted_in_survivors' do
 			expect(report).to receive(:update_flag_abducted_in_survivors)
@@ -16,8 +19,7 @@ RSpec.describe Report, type: :model do
 	end
 
 	describe 'update_flag_abducted_in_survivors' do
-		let!(:survivors) { create_list(:survivor, 10) }
-		let(:survivor_id) { survivors.first.id }
+		
 
 		context 'when there less then three or more reports' do
 			it 'do NOT falg survivor as `abducted`' do
