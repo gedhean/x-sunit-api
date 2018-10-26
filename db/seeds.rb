@@ -21,8 +21,8 @@ end
 
 40.times do
 	Report.create({
-		reporter_id: Faker::Number.between(1, 80),
+		reporter_id: Survivor.all(select: "id").sample,
 		message: Faker::Lorem.sentence,
-		abducted_id: Faker::Number.between(1, 10)
+		abducted_id: Survivor.all(select: "id").sample
 	})
 end
