@@ -9,7 +9,7 @@
 Survivor.delete_all
 Report.delete_all
 
-30.times do 
+100.times do 
 	Survivor.create({
 		name: Faker::Name.name,
 		age: Faker::Number.between(2, 100),
@@ -21,7 +21,7 @@ end
 
 40.times do
 	Report.create({
-		reporter_id: Faker::Number.between(1, 30),
+		reporter_id: Faker::Number.between(1, 80),
 		message: Faker::Lorem.sentence,
 		abducted_id: Faker::Number.between(1, 10)
 	})
