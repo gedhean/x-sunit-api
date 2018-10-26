@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2018_10_21_121823) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "reports", force: :cascade do |t|
     t.integer "reporter_id"
     t.integer "abducted_id"
@@ -31,4 +34,6 @@ ActiveRecord::Schema.define(version: 2018_10_21_121823) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "reports", "survivors", column: "abducted_id"
+  add_foreign_key "reports", "survivors", column: "reporter_id"
 end
